@@ -4,7 +4,7 @@ Grupo laboratorio ISO 2 BC-06
 ## Integrantes del proyecto
 
 * Adrian Martín García
-* Javier Villa Asensio
+* Javier Villar Asensio
 * Juan Ignacio Moreno Sevilla
 * Antonio Rodríguez López
 * Rubén Fernández Cámara
