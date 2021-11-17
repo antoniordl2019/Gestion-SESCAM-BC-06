@@ -9,4 +9,3 @@ Grupo laboratorio ISO 2 BC-06
 * Juan Ignacio Moreno Sevilla
 * Rubén Fernández Cámara
 * Francisco Miguel Ruiz Moyano
-
