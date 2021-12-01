@@ -1,5 +1,9 @@
 package Presentacion;
 import Dominio.Enfermo;
+package Presentacion;
+import Dominio.Ciudadano;
+import Dominio.Hospital;
+import Dominio.Vacuna;
 import java.util.*;
 /**
  * Clase: Gestiona la interaccion del usuario con la app
@@ -12,18 +16,34 @@ import java.util.*;
 
 public class GestorInteracciones {
 	static Scanner ENTRADA = new Scanner(System.in);
-	static List<Enfermo> LISTA = new ArrayList<Enfermo>();
-	static Enfermo MARIA = new Enfermo("Maria", "00000000A", 28, "Sano", false, null);
-	static Enfermo JUAN = new Enfermo("Juan", "11111111B", 54, "Enfermo", true, null);
-	static Enfermo ABIGAIL = new Enfermo("Abigail", "22222222C", 19, "Sano en cuarentena", false, null);
 	
 	public static void main (String[] args) {
-		List<Enfermo> pacientes = new ArrayList<Enfermo>();
-		inicializarLista(pacientes);
+		
+		//Inicializamos varias instancias de objetos para simular la base de datos
+		
+		 ArrayList<String> enfermedades = new ArrayList<String>();
+		enfermedades.add("diabetes");
+		ArrayList<Ciudadano> LISTA = new ArrayList<Ciudadano>();
+		Ciudadano MARIA = new Ciudadano("Maria","García Parra","111222333", "00000000A","25/6/1994", 1, null, null, null, "Sano");
+		Ciudadano JUAN = new Ciudadano("Juan","Martín Pérez","444555666", "11111111B","16/4/1974", 2, enfermedades, null, null, "Sano en cuarentena");
+		enfermedades.add("cardiopatía");
+		Ciudadano PEDRO = new Ciudadano("Pedro", "Fernández Soria", "777888999", "22222222C", "6/8/1954", 4, enfermedades, null, null, "Enfermo en cuarentena");
+		
+		Vacuna vacuna1 = new Vacuna(3, 6, "Pfizer", null, 60);
+		Vacuna vacuna2 = new Vacuna(2, 6, "Moderna", null, 60);
+		Vacuna vacuna3 = new Vacuna(4, 6, "AstraZeneca", null, 45);
+		Stack<Vacuna> pila = new Stack<Vacuna>();
+		pila.add(vacuna3);
+		pila.add(vacuna2);
+		pila.add(vacuna1);
+
+		
+		inicializarLista(LISTA, MARIA, JUAN, PEDRO);
+		Hospital hospital = new Hospital(27, pila, LISTA);
 		
 	}
-	public static void imprimirPacientes(List<Enfermo> pacientes) {
-		Iterator<Enfermo> it = pacientes.iterator();
+	public static void imprimirPacientes(List<Ciudadano> pacientes) {
+		Iterator<Ciudadano> it = pacientes.iterator();
 		int nEnfermos = 1;
 		while(it.hasNext()) {
 			System.out.println(nEnfermos+": "+it.next().getNombre());
@@ -36,27 +56,25 @@ public class GestorInteracciones {
 		System.out.println("3: Sano en cuarentena");
 		System.out.println("4: Enfermo en cuarentena");
 	}
-	public static void inicializarLista(List<Enfermo> pacientes) {
+	public static void inicializarLista(ArrayList<Ciudadano> LISTA, Ciudadano MARIA, Ciudadano JUAN, Ciudadano PEDRO) {
 		LISTA.add(MARIA);
 		LISTA.add(JUAN);
-		ABIGAIL.setContactos(LISTA);
+		PEDRO.setContactos(LISTA);
 		LISTA.clear();
 		LISTA.add(JUAN);
-		LISTA.add(ABIGAIL);
+		LISTA.add(PEDRO);
 		MARIA.setContactos(LISTA);
 		LISTA.clear();
 		LISTA.add(MARIA);
-		LISTA.add(ABIGAIL);
+		LISTA.add(PEDRO);
 		JUAN.setContactos(LISTA);
 		LISTA.clear();
 		
-		pacientes.add(MARIA);
-		pacientes.add(JUAN);
-		pacientes.add(ABIGAIL);
+		LISTA.add(MARIA);
+		LISTA.add(JUAN);
+		LISTA.add(PEDRO);
 	}
-
-	public void iniciarSesion() {}
-	public void ActualizarEstadoPaciente(List<Enfermo> pacientes) {
+	public void ActualizarEstadoPaciente(List<Ciudadano> pacientes) {
 		System.out.println("Introduzca qué paciente desea actualizar");
 		imprimirPacientes(pacientes);
 		int eleccion = eleccion();
@@ -64,7 +82,7 @@ public class GestorInteracciones {
 			System.out.println("Por favor introduzca una opción válida");
 			eleccion = eleccion();
 		}
-		Enfermo pacienteElegido = pacientes.get(eleccion+1);
+		Ciudadano pacienteElegido = pacientes.get(eleccion+1);
 		System.out.println("Introduzca qué estado desea actualizar");
 		imprimirEstados();
 		eleccion = eleccion();
@@ -86,7 +104,7 @@ public class GestorInteracciones {
 		}
 		if (eleccion == 2 || eleccion == 4) {
 			System.out.println("Al estar enfermo se muestra los contactos de esta persona");
-			Iterator<Enfermo> it = pacienteElegido.getContactos().iterator();
+			Iterator<Ciudadano> it = pacienteElegido.getContactos().iterator();
 			while(it.hasNext())
 				System.out.println(it.next().getNombre());
 		}
@@ -101,32 +119,5 @@ public class GestorInteracciones {
 		}
 		return eleccion;
 	}
-	public void calendarioVacunacion(List<Enfermo> pacientes, int aprovisionamiento) {
-		System.out.println("**VACUNACION POR TURNOS POR AVISO DE EPIDEMIA**");
-		int turno = 1;
-		for(Enfermo enfermo: pacientes) {
-			if(enfermo.isVulnerable()) {
-				if(aprovisionamiento==0) {
-					turno = esperarAprovisionamiento(turno);
-				}
-				System.out.println(enfermo.getNombre()+" tiene prioridad para vacunarse "
-						+ "en el turno: "+turno+" y recibirá la siguiente dosis 60 días después");
-				turno++;
-			}
-		}
-		for (Enfermo enfermo: pacientes) {
-			if (!enfermo.isVulnerable()) {
-				if(aprovisionamiento==0) {
-					turno = esperarAprovisionamiento(turno);
-				}
-				System.out.println(enfermo.getNombre()+" tiene que vacunarse en el turno"+turno
-						+" y recibirá la siguiente dosis 60 días después");
-			}
-		}
-	}
-	public static int esperarAprovisionamiento(int turno) {
-		//Simula la espera en turnos hasta aprovisionamiento
-		turno += 5;
-		return turno;
-	}
+	
 }
