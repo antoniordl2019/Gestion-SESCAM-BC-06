@@ -13,11 +13,12 @@ public class Ciudadano {
 	private ArrayList<Vacuna> dosis;
 	private ArrayList<Ciudadano> contactos;
 	private String estado;
+	private int idHospital;
 	
 	public Ciudadano (String nombre, String apellidos, String telefono, 
 			String DNI, String fechaNacimiento, int nivelVulnerabilidad,
 			ArrayList<String> enfermedadesDeRiesgo, ArrayList<Vacuna> dosis, 
-			ArrayList<Ciudadano> contactos, String estado){
+			ArrayList<Ciudadano> contactos, String estado,int idHopital){
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.telefono = telefono;
@@ -28,6 +29,7 @@ public class Ciudadano {
 		this.dosis = dosis;
 		this.contactos = contactos;
 		this.estado = estado;
+		this.idHospital=idHopital;
 	}
 	
 	public String getNombre() {
@@ -66,8 +68,19 @@ public class Ciudadano {
 	public void setContactos(ArrayList<Ciudadano> contactos) {
 		this.contactos = contactos;
 	}
-	public String toString() {
-		return "Paciente: "+nombre+" "+apellidos+", con DNI:"
-				+DNI+", y un nivel de vulnerabilidad"+nivelVulnerabilidad;
+	public int getIdHospital() {
+		return idHospital;
 	}
+	public void setIdHospital(int idHospital) {
+		this.idHospital=idHospital;
+	}
+
+	@Override
+	public String toString() {
+		return "Ciudadano [DNI=" + DNI + ", apellidos=" + apellidos + ", contactos=" + contactos + ", dosis=" + dosis
+				+ ", enfermedadesDeRiesgo=" + enfermedadesDeRiesgo + ", estado=" + estado + ", fechaNacimiento="
+				+ fechaNacimiento + ", nivelVulnerabilidad=" + nivelVulnerabilidad + ", nombre=" + nombre
+				+ ", telefono=" + telefono + "]";
+	}
+	
 }

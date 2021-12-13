@@ -13,11 +13,12 @@ public class Laboratorio {
 	public ArrayList<Vacuna> getVacunas(){
 		return vacunas;
 	}
-	public int idLaboratorio() {
+	public int getIdLaboratorio() {
 		return idLaboratorio;
 	}
+	
 	public String toString() {
 		return "El laboratorio "+idLaboratorio+" tiene "
-				+vacunas.size()+" vacuans";
+				+vacunas.size()+" vacunas";
 	}
 }
