@@ -1,0 +1,41 @@
+Tiempos en horas
+
+Actualizar estado del paciente (Extends: Si enfermo, mirar contactos): Prioridad 1
+
+Requisitos: 4
+Analisis: 4
+Diseño: 10
+Implementación: 15
+Testeo: 3
+
+Realizar calendario de vacunación (Include: Informar paciente vulnerable): Prioridad 2 
+
+Requisitos: 3
+Analisis: 5
+Diseño: 7
+Implementación: 10
+Testeo: 3
+
+Listar enfermadades infectocontagiosas: Prioridad 3 
+
+Requisitos: 3
+Analisis: 2
+Diseño: 2
+Implementación: 12
+Testeo: 2
+
+Actualizar inventario de campaña: Prioridad 3
+
+Requisitos: 4
+Analisis: 2
+Diseño: 5
+Implementación: 10
+Testeo: 4
+
+Realizar estadísticas: Prioridad 4
+
+Requisitos: 2
+Analisis: 2
+Diseño: 5
+Implementación: 20
+Testeo: 5
